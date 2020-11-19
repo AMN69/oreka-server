@@ -11,6 +11,7 @@ const MongoStore = require("connect-mongo")(session);
 const cors = require("cors");
 
 const auth = require("./routes/auth");
+const agenRoute = require("./routes/agenda-routes");
 
 // MONGOOSE CONNECTION
 mongoose
@@ -65,6 +66,8 @@ app.use(express.static(path.join(__dirname, "public")));
 
 // ROUTER MIDDLEWARE
 app.use("/auth", auth);
+app.use("/agenda-routes", agenRoute);
+
 
 // ERROR HANDLING
 // catch 404 and forward to error handler

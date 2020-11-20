@@ -68,7 +68,6 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/auth", auth);
 app.use("/agenda-routes", agenRoute);
 
-
 // ERROR HANDLING
 // catch 404 and forward to error handler
 app.use((req, res, next) => {

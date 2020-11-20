@@ -13,7 +13,6 @@ const agendaSchema = new Schema({
         skillToDoDesc: String,
         skillDoneTick: Boolean
     }],
-   
     appointments: [{
         appointmentDesc: String
     }],
@@ -28,20 +27,18 @@ const agendaSchema = new Schema({
               {
               incomeDesc: String,
               incomeAmount: Number
-              }	  
+              }   
         ],
         [
         {
               expenseDesc: String,
               expenseAmount: Number
-              }	 
+              }  
         ]
     ],
     reward: String,
     insights: String
-  });
-
+});
 
 const Agenda = mongoose.model('Agenda', agendaSchema);
-
 module.exports = Agenda;

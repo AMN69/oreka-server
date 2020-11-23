@@ -7,6 +7,9 @@ const User = require("../models/user");
 const Agenda = require("../models/agenda");
 const mongoose = require("mongoose");
 
+// include CLOUDINARY:
+const uploader = require("../configs/cloudinary-setup");
+
 // HELPER FUNCTIONS
 const {
     isLoggedIn,
@@ -95,6 +98,7 @@ router.post("/agendacreate/:userId", (req, res, next) => {
         .catch(err => {
         res.json(err);
         });
+        return;
     });
 
 //// PUT route => to update a specific dashboard
@@ -113,4 +117,21 @@ router.put('/agendamodify/:id', (req, res, next)=>{
     return;
 });
 
+// Uploads user photo to cloudinary.
+console.log("Before entering /upload");
+router.post("/upload", uploader.single("userImgUrl"), (req, res, next) => {
+
+    console.log('file is: ', req.file)
+  
+    if (!req.file) {
+      next(new Error("No file uploaded!"));
+      return;
+    }
+    // get secure_url from the file object and save it in the
+    // variable 'secure_url', but this can be any name, just make sure you remember to use the same in frontend
+    res.json({ secure_url: req.file.secure_url });
+    console.log('url: ', req.file.secure_url);
+    return;
+});
+console.log("After leaving /upload")
 module.exports = router;

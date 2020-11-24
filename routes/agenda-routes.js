@@ -24,20 +24,19 @@ router.get("/agenda", isLoggedIn(), async (req, res, next) => {
     const year = req.query.year;
     const month = req.query.month;
 
-    console.log("req.params:", req.query);
-    console.log("user: ", req.session.currentUser._id);
+    console.log("req.query:", req.query);
+    console.log("userId: ", userId);
 
     try {
         let agendaYYYYMM = await Agenda.findOne(
             {userId: userId, 
             year: year, 
             month: month});
-            console.log("agenda:", agendaYYYYMM);
         res.status(200).json(agendaYYYYMM);
+        console.log("AGENDA on backend is: ", agendaYYYYMM);
     } catch (error) {
         res.json(error);
     }
-    return;
 });
 
 //  PUT '/usermodify (at url level it's /auth/usermodify because in app.js we've defined the route starting by /auth)
@@ -83,14 +82,14 @@ router.post("/agendacreate/:userId", (req, res, next) => {
         userId: req.params.userId,
         year: req.body.year,
         month: req.body.month,
-        habits: [{habitToDoDesc: req.body.habits.habitToDoDesc, habitDoneTick: req.body.habits.habitToDoDesc}],
+        habits: [],
         skills: [],
-        appointments: [{appointmentDesc: req.body.appointments}],
+        appointments: [],
         peopleToMeet: [],
         placesToVisit: [],
         finance: [[]],
-        reward: req.body.reward,
-        insights: req.body.insights
+        reward: "",
+        insights: ""
     })
         .then(response => {
         res.json(response);
@@ -102,13 +101,16 @@ router.post("/agendacreate/:userId", (req, res, next) => {
     });
 
 //// PUT route => to update a specific dashboard
-router.put('/agendamodify/:id', (req, res, next)=>{
+router.patch('/agendamodify/:id', (req, res, next)=>{
     if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
       res.status(400).json({ message: 'Specified id is not valid' });
       return;
     }
-    Agenda.findByIdAndUpdate(req.params.id, req.body)
-      .then(() => {
+    console.log("Agenda on back just before updating: ", req.body);
+    console.log("Params.id: ", req.params.id);
+    Agenda.findByIdAndUpdate(req.params.id, req.body.agenda, {new: true})
+      .then((response) => {
+        console.log("response: ", response);
         res.json({ message: `Dashboard ${req.params.id} has been updated successfully.` });
       })
       .catch(err => {
@@ -118,7 +120,6 @@ router.put('/agendamodify/:id', (req, res, next)=>{
 });
 
 // Uploads user photo to cloudinary.
-console.log("Before entering /upload");
 router.post("/upload", uploader.single("userImgUrl"), (req, res, next) => {
 
     console.log('file is: ', req.file)
@@ -133,5 +134,4 @@ router.post("/upload", uploader.single("userImgUrl"), (req, res, next) => {
     console.log('url: ', req.file.secure_url);
     return;
 });
-console.log("After leaving /upload")
 module.exports = router;

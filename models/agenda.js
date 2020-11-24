@@ -15,12 +15,15 @@ const agendaSchema = new Schema({
     }],
     appointments: [{
         appointmentDesc: String
+        appointmentTick: Boolean
     }],
     peopleToMeet: [{
-        personToMeetDesc: String
+        personToMeetDesc: String,
+        personToMeetTick: Boolean
     }],
     placesToVisit: [{
-        placeToVisit: String
+        placeToVisit: String,
+        placeToVisitTick: Boolean
     }],
     finance: [
         [

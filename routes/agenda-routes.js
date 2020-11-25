@@ -88,12 +88,14 @@ router.post("/agendacreate/:userId", (req, res, next) => {
     });
 
 //// PUT route => to update a specific dashboard
-router.patch('/agendamodify/:id', (req, res, next)=>{
+router.patch('/agendamodify/:id/:field', (req, res, next)=>{
+
     if(!mongoose.Types.ObjectId.isValid(req.params.id)) {
       res.status(400).json({ message: 'Specified id is not valid' });
       return;
     }
-    Agenda.findByIdAndUpdate(req.params.id, req.body.agenda, {new: true})
+   
+    Agenda.findByIdAndUpdate(req.params.id, {[req.params.field]: req.body.agenda}, {new: true})
       .then((response) => {
         res.json({ message: `Dashboard ${req.params.id} has been updated successfully.` });
       })

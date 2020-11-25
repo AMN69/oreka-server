@@ -5,10 +5,12 @@ const agendaSchema = new Schema({
     userId:{type: Schema.Types.ObjectId, ref:'user'},
     year: Number,
     month: Number,
-    habits: [{
+    habits: [
+        {
         habitToDoDesc: String,
-        habitDoneTick: Boolean
-    }],
+        habitDoneTick: {type: Boolean, default: false}
+         }
+    ],
     skills: [{
         skillToDoDesc: String,
         skillDoneTick: Boolean

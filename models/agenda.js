@@ -27,20 +27,15 @@ const agendaSchema = new Schema({
         placeToVisitDesc: String,
         placeToVisitTick: Boolean
     }],
-    finance: [
-        [
-              {
+    incomes: [{
               incomeDesc: String,
               incomeAmount: Number
-              }   
-        ],
-        [
-        {
+            
+    }],
+    expenses: [{
               expenseDesc: String,
               expenseAmount: Number
-              }  
-        ]
-    ],
+    }],
     reward: String,
     insights: String
 });

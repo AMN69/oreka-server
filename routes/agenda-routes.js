@@ -94,9 +94,10 @@ router.patch('/agendamodify/:id/:field', (req, res, next)=>{
       res.status(400).json({ message: 'Specified id is not valid' });
       return;
     }
-   
+   console.log(req.body.agenda[1])
     Agenda.findByIdAndUpdate(req.params.id, {[req.params.field]: req.body.agenda}, {new: true})
       .then((response) => {
+        console.log(response.finance[1])
         res.json({ message: `Dashboard ${req.params.id} has been updated successfully.` });
       })
       .catch(err => {
